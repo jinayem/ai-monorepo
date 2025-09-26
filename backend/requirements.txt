@@ -1,0 +1,4 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+# torch, transformers, trl etc will be added in later phases
