@@ -1,0 +1,11 @@
+# Core ML / NLP packages
+torch==2.3.0
+transformers==4.44.0
+trl==0.11.4
+
+# Dev utilities
+jupyter
+ipython
+
+# Experiment tracking (to be used later)
+mlflow==2.16.2

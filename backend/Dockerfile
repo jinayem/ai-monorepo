@@ -7,8 +7,13 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
+# 🔥 Add dev requirements (optional, for ML env)
+COPY dev-requirements.txt /app/
+RUN pip install --no-cache-dir -r dev-requirements.txt
+
 # copy app
 COPY app /app/app
+COPY scripts /app/scripts
 
 ENV PYTHONUNBUFFERED=1
 EXPOSE 8000
