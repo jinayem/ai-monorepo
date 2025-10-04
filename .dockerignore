@@ -1,0 +1,14 @@
+# .dockerignore (repo root)
+.venv
+venv
+env
+.dockerignore
+.git
+.gitignore
+.vscode
+frontend
+node_modules
+dist
+data
+models
+*.log

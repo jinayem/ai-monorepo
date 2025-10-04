@@ -1,0 +1,30 @@
+# backend/.dockerignore
+# local python envs
+.venv
+venv
+env
+
+# python caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+pip-wheel-metadata/
+
+# project / editor
+.env
+.vscode
+.git
+.gitignore
+
+# node / frontend
+node_modules
+dist
+frontend
+
+# data / models / logs
+data/
+models/
+*.log
+*.tar
+*.zip
