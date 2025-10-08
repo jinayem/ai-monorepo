@@ -21,9 +21,25 @@ RUN pip install --no-cache-dir --prefix=/install -r /build/requirements.txt
 
 # -------- dev stage (optional; heavy ML/dev deps) ----------
 FROM builder AS dev
-# copy dev requirements and install into /install (dev image will contain these)
+WORKDIR /app
+
+# install heavy ML/dev dependencies
 COPY dev-requirements.txt /build/dev-requirements.txt
 RUN pip install --no-cache-dir --prefix=/install -r /build/dev-requirements.txt
+
+# copy runtime site-packages from builder
+COPY --from=builder /install /usr/local
+
+# copy app source code so you can test/run it inside the dev container
+COPY app /app/app
+COPY scripts /app/scripts
+COPY requirements.txt /app/requirements.txt
+
+# expose port for local FastAPI debugging
+EXPOSE 8000
+
+# default command for dev: interactive shell or you can override in docker run
+CMD ["bash"]
 
 # -------- runtime stage (final small image) ----------
 FROM python:3.11-slim AS runtime
