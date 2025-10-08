@@ -2,7 +2,7 @@
 # Multi-stage: builder -> dev (optional) -> runtime (final small image)
 
 # -------- builder (compile & install runtime deps) ----------
-FROM python:3.11-slim AS builder
+FROM python:3.10-slim AS builder
 ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /build
 
@@ -42,7 +42,7 @@ EXPOSE 8000
 CMD ["bash"]
 
 # -------- runtime stage (final small image) ----------
-FROM python:3.11-slim AS runtime
+FROM python:3.10-slim AS runtime
 ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
