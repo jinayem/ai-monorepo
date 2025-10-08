@@ -23,12 +23,12 @@ RUN pip install --no-cache-dir --prefix=/install -r /build/requirements.txt
 FROM builder AS dev
 WORKDIR /app
 
-# install heavy ML/dev dependencies
-COPY dev-requirements.txt /build/dev-requirements.txt
-RUN pip install --no-cache-dir --prefix=/install -r /build/dev-requirements.txt
-
-# copy runtime site-packages from builder
+# copy runtime site-packages from builder first
 COPY --from=builder /install /usr/local
+
+# now install heavy ML/dev dependencies INTO /usr/local
+COPY dev-requirements.txt /build/dev-requirements.txt
+RUN pip install --no-cache-dir -r /build/dev-requirements.txt
 
 # copy app source code so you can test/run it inside the dev container
 COPY app /app/app
