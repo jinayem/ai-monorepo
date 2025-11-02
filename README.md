@@ -17,8 +17,10 @@ This monorepo provides a unified structure for full-stack AI development and dep
 
 **Run backend locally:**
 
+```bash
 cd backend
 uvicorn app.main:app --reload
+```
 
 ## Day 2: ML Development Environment (Docker)
 
@@ -35,7 +37,9 @@ uvicorn app.main:app --reload
 
 **Run and test in Dev Container:**
 
+```bash
 cd backend
 docker build --target dev -t ai-backend:day2dev .
 docker run -it --rm ai-backend:day2dev bash
 python scripts/torch_test.py
+```
