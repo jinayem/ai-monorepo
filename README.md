@@ -43,3 +43,38 @@ docker build --target dev -t ai-backend:day2dev .
 docker run -it --rm ai-backend:day2dev bash
 python scripts/torch_test.py
 ```
+
+## Day 3: Add Dummy AI Inference + CI Pipeline Validation
+
+- Added a minimal /predict API endpoint for dummy AI inference.
+- Implemented CPU-fallback inference logic for environments without GPU.
+- Added request/response validation for predictable behavior.
+- Extended GitHub Actions CI pipeline to:
+    - install backend dependencies
+    - start FastAPI server on port 9000
+    - verify /health endpoint
+    - validate /predict inference with test payload
+- Ensured backend boots correctly inside CI using Uvicorn in background mode.
+
+**Run backend locally (dev mode):**
+
+```bash
+cd backend
+uvicorn app.main:app --reload
+```
+
+**Run backend for CI-style test locally:**
+
+```bash
+cd backend
+python -m uvicorn app.main:app --host 127.0.0.1 --port 9000
+```
+
+**Test Endpoints:**
+
+```bash
+curl http://127.0.0.1:9000/health
+curl -X POST http://127.0.0.1:9000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"input": [1, 2, 3]}'
+```

@@ -3,21 +3,35 @@ name: Basic CI
 on: [push, pull_request]
 
 jobs:
-  backend-lint:
+  backend-tests:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Install deps
+
+      - name: Install backend dependencies
         run: |
           cd backend
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Run basic test (start server health)
+
+      - name: Start API server
         run: |
+          cd backend
           python -m uvicorn app.main:app --port 9000 --host 127.0.0.1 &
           sleep 2
+
+      - name: Health Check
+        run: |
           curl -fsS http://127.0.0.1:9000/health
+
+      - name: Predict Test
+        run: |
+          curl -fsS -X POST http://127.0.0.1:9000/predict \
+            -H "Content-Type: application/json" \
+            -d '{"input": [1, 2, 3]}'
