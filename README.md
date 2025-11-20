@@ -78,3 +78,22 @@ curl -X POST http://127.0.0.1:9000/predict \
   -H "Content-Type: application/json" \
   -d '{"input": [1, 2, 3]}'
 ```
+
+**ML Runtime Dependencies (Updated):**
+
+Our backend service now includes runtime machine learning dependencies required for model inference. These packages are installed from requirements.txt so that production Docker images contain only what is needed to serve requests efficiently.
+
+**Why this change?**
+
+Previously, only development dependencies (Torch, Transformers, TRL) were included in ``dev-requirements.txt``, which meant the final runtime Docker image did not contain required ML packages. This caused:
+
+```ModuleNotFoundError: No module named 'torch'```
+
+To support inference in the production container, we added the following dependencies to ``requirements.txt``:
+
+```bash
+# Runtime ML dependencies for inference
+torch==2.3.0
+transformers==4.44.0
+trl==0.11.4
+```

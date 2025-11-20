@@ -1,4 +1,8 @@
 fastapi
 uvicorn[standard]
 python-dotenv
-# torch, transformers, trl etc will be added in later phases
+
+# Runtime ML dependencies for inference
+torch==2.3.0
+transformers==4.44.0
+trl==0.11.4
